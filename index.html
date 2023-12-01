@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blood Cube Waves</title>
+  <style>
+    canvas {
+      border: 1px solid #000;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="bloodCubeCanvas" width="300" height="300"></canvas>
+
+  <script>
+    const canvas = document.getElementById('bloodCubeCanvas');
+    const ctx = canvas.getContext('2d');
+    const cubeSize = 300;
+    const centerX = cubeSize / 2;
+    const centerY = cubeSize / 2;
+    const initialRadius = 50;
+    const waveSpeed = 2;
+
+    let time = 0;
+
+    function drawCube() {
+      ctx.fillStyle = 'rgba(255, 0, 0)';
+      ctx.fillRect(0, 0, cubeSize, cubeSize);
+    }
+
+    function drawWaves() {
+      ctx.beginPath();
+      ctx.strokeStyle = 'rgba(0, 0, 0)';
+      ctx.lineWidth = 2;
+
+      for (let radius = initialRadius; radius < cubeSize / 2; radius += waveSpeed) {
+        ctx.arc(centerX, centerY, radius + Math.sin(time + radius / 10) * 10, 0, 2 * Math.PI);
+      }
+
+      ctx.stroke();
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, cubeSize, cubeSize);
+      drawCube();
+      drawWaves();
+
+      time += 0.09;
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+</body>
+</html>
